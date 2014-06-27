@@ -39,7 +39,7 @@ class Thread(threading.Thread):
                 div_class_pad10_tag = soup.find('div', {'class':['pad10']})
                 aref_list = div_class_pad10_tag.find_all('a')
                 for aref in aref_list:
-                    if aref.has_key('href'):
+                    if aref.has_attr('href'):
                         ref_str = aref.get('href')
                         idx = ref_str.find('www+')
                         if idx != -1:

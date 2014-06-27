@@ -7,12 +7,12 @@ start_url = "http://slickdeals.net/forums/forumdisplay.php?f=9"
 domain= "http://slickdeals.net"
 page_queue = Queue(maxsize = max_size)
 post_queue = Queue(maxsize = max_size)
-db_queue   = Queue(maxsize = max_size)
+db_queue   = Queue(maxsize = 100)
 url = None
-
+file_name = "data/deal_ratings.txt"
 page_parser_threadList = [PageParser.Thread(page_queue, post_queue, domain) for i in xrange(num_threads)]
 post_parser_threadList = [PostParser.Thread(post_queue, db_queue) for i in xrange(num_threads)]
-db_writer_threadList   = [DbWriter.Thread(db_queue) for i in xrange(num_threads)]
+db_writer_threadList   = [DbWriter.Thread(db_queue, file_name) for i in xrange(1)]
 
 page_queue.put(start_url, True)
 #Start Threads
