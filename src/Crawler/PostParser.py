@@ -45,7 +45,7 @@ class Thread(threading.Thread):
                         if idx != -1:
                             deal_url_list = ref_str[idx:].split('+')[:3]
                             deal_url = ".".join(deal_url_list)
-                            post_msg = thread_id+"|"+deal_url+"|"+score+url+"\n"
+                            post_msg = thread_id+"|"+deal_url+"|"+score+"|"+url+"\n"
                             self.out_queue.put(post_msg, True)
                         #idx if ends
                     #href if ends
