@@ -11,7 +11,7 @@ class Thread(threading.Thread):
         out_file = self.out_file
         with open(out_file, "w") as fp:
             while True:
-                msg = self.queue.get(True)+"\n"
+                msg = self.queue.get(True)
                 #print msg
                 fp.write(msg)
             #while ends
