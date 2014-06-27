@@ -28,6 +28,29 @@ class Thread(threading.Thread):
             try:
                 url = self.in_queue.get(True)
                 #print url
+                thread_id = get_thread_id(url)
+                html_response = requests.get(url)
+                soup = BeautifulSoup(html_response.text)
+                div_class_score_tag = soup.find('div', {'class':['vote_score']})
+                score_label = div_class_score.label
+                score = score_label.contents[0]
+                div_class_pad10_tag = soup.find('div', {'class':['pad10']})
+                aref_list = div_class_pad10_tag.find_all('a')
+                for aref in aref_list:
+                    if aref.has_key('href'):
+                        ref_str = aref.get('href')
+                        idx = ref_str.find('www+')
+                        if idx != -1:
+                            deal_url_list = ref_str[idx:].split('+')[:3]
+                            deal_url = ".".join(deal_url_list)
+                            post_msg = thread_id+"|"+deal_url+"|"+score
+                            self.out_queue.put(post_msg, True)
+                        #idx if ends
+                    #href if ends
+                # aref for ends
+
+
+
 
 
             except requests.exceptions.RequestException:
