@@ -1,7 +1,7 @@
 import threading
 import requests
 from bs4 import BeautifulSoup
-
+import re
 
 class Thread(threading.Thread):
     
@@ -29,8 +29,8 @@ class Thread(threading.Thread):
                     continue
 
                 for aref in aref_list:
-                    if aref.has_key('id') and re.match(r'thread_title_*', aref.get('id')):
-                        if aref.has_key('href'):
+                    if aref.has_attr('id') and re.match(r'thread_title_*', aref.get('id')):
+                        if aref.has_attr('href'):
                             out_url = self.domain+str(aref.get('href'))
                             self.out_queue.put(out_url, True)
                         #href if ends
