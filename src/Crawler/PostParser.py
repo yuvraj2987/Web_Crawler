@@ -25,17 +25,17 @@ class Thread(threading.Thread):
     def run(self):
         while True:
             try:
-                print "PostPraser Thread started"
+                #print "PostPraser Thread started"
                 url = self.in_queue.get(True)
-                print "Post:", url
+                #print "Post:", url
                 thread_id = get_thread_id(url)
-                print "thread_id:", thread_id
+                #print "thread_id:", thread_id
                 html_response = requests.get(url)
                 soup = BeautifulSoup(html_response.text)
                 div_class_score_tag = soup.find('div', {'class':['vote_score']})
                 score_label = div_class_score_tag.label
                 score = score_label.contents[0]
-                print "score:", score
+                #print "score:", score
                 div_class_pad10_tag = soup.find('div', {'class':['pad10']})
                 aref_list = div_class_pad10_tag.find_all('a')
                 for aref in aref_list:
@@ -50,7 +50,7 @@ class Thread(threading.Thread):
                         #idx if ends
                     #href if ends
                 # aref for ends
-                print "Post complete"
+                #print "Post complete"
             except requests.exceptions.RequestException:
                 pass
 
