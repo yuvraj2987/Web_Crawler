@@ -8,11 +8,17 @@ class Thread(Threading.Thread):
         self.in_queue = input_queue
         self.out_queue = output_queue
         self.domain = domain_name
+				self._stop  = threading.Event()
         super(Thread, self).__init__()
+		
+		def stop(self):
+				""" Stop current thread
+				"""
+				self._stop.set()
 
     def run(self):
-
-        while True:
+				_stop = self._stop
+        while not _stop.is_set():
             try:
                 url = self.in_queue.get(True)
                 print url

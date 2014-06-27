@@ -21,5 +21,16 @@ for page_num in range(2, 3):
 		page_queue.put(url, True)
 
 
+try:
+    while True:
+        print "Wait for all threads to end"
+
+except KeyboardInterrupt:
+    for thread in page_parser_threadList:
+        thread.stop()
+        thread.join()
+
+    print "All thread stopped"
+
 
 
