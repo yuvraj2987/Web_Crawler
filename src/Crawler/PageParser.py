@@ -16,7 +16,7 @@ class Thread(threading.Thread):
         while True:
             try:
                 url = self.in_queue.get(True)
-                print url
+                #print url
                 #process url
                 html_response = requests.get(url)
                 if html_response is None:
