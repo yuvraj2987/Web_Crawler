@@ -16,24 +16,26 @@ def get_thread_id(url):
 
 class Thread(threading.Thread):
     
-    def __init__(self, input_queue, output_queue, domain_name):
+    def __init__(self, input_queue, output_queue):
         self.in_queue = input_queue
         self.out_queue = output_queue
-        self.domain = domain_name
         super(Thread, self).__init__()
 		
 
     def run(self):
         while True:
             try:
+                print "PostPraser Thread started"
                 url = self.in_queue.get(True)
-                #print url
+                print "Post:", url
                 thread_id = get_thread_id(url)
+                print "thread_id:", thread_id
                 html_response = requests.get(url)
                 soup = BeautifulSoup(html_response.text)
                 div_class_score_tag = soup.find('div', {'class':['vote_score']})
-                score_label = div_class_score.label
+                score_label = div_class_score_tag.label
                 score = score_label.contents[0]
+                print "score:", score
                 div_class_pad10_tag = soup.find('div', {'class':['pad10']})
                 aref_list = div_class_pad10_tag.find_all('a')
                 for aref in aref_list:
@@ -48,11 +50,7 @@ class Thread(threading.Thread):
                         #idx if ends
                     #href if ends
                 # aref for ends
-
-
-
-
-
+                print "Post complete"
             except requests.exceptions.RequestException:
                 pass
 
